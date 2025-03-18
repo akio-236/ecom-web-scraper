@@ -12,45 +12,62 @@
   <body>
     <div class="container">
       <h1>Amazon Product Scraper</h1>
-      <form method="POST">
-        <input type="url" name="url" placeholder="Enter product URL" required />
+      <form id="scraper-form">
+        <input
+          type="url"
+          id="url"
+          name="url"
+          placeholder="Enter Amazon product URL"
+          required
+        />
         <button type="submit">Scrape</button>
       </form>
 
-      {% if error %}
-      <p class="error">{{ error }}</p>
-      {% endif %} {% if product %}
-      <div class="product-details">
-        <h2>{{ product['Product Name'] }}</h2>
-        <p><strong>Price:</strong> {{ product['Price'] }}</p>
-        <p><strong>Description:</strong> {{ product['Description'] }}</p>
-        <p><strong>Availability:</strong> {{ product['Availability'] }}</p>
+      <!-- Loading Spinner -->
+      <div id="loading-spinner" class="spinner" style="display: none">
+        <div class="loader"></div>
+      </div>
 
+      <!-- Error Message -->
+      <div id="error-message" class="error" style="display: none"></div>
+
+      <!-- Results Section -->
+      <div id="results" style="display: none">
+        <h2 id="product-name"></h2>
+        <p><strong>Price:</strong> <span id="product-price"></span></p>
+        <p>
+          <strong>Description:</strong> <span id="product-description"></span>
+        </p>
+        <p>
+          <strong>Availability:</strong> <span id="product-availability"></span>
+        </p>
+
+        <!-- Image Carousel -->
         <h3>Images</h3>
-        <div class="images">
-          {% for image in product['Images'] %}
-          <img src="{{ image }}" alt="Product Image" />
-          {% endfor %}
+        <div id="image-carousel" class="carousel">
+          <button id="prev-button" class="carousel-button">&#10094;</button>
+          <div id="carousel-images"></div>
+          <button id="next-button" class="carousel-button">&#10095;</button>
         </div>
 
+        <!-- Reviews -->
         <h3>Reviews</h3>
-        <ul class="reviews">
-          {% for review in product['Reviews'] %}
-          <li>{{ review }}</li>
-          {% endfor %}
-        </ul>
+        <ul id="reviews"></ul>
 
+        <!-- Specifications -->
         <h3>Specifications</h3>
-        <table class="specifications">
-          {% for key, value in product['Specifications'].items() %}
-          <tr>
-            <th>{{ key }}</th>
-            <td>{{ value }}</td>
-          </tr>
-          {% endfor %}
+        <table id="specifications">
+          <thead>
+            <tr>
+              <th>Attribute</th>
+              <th>Value</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
         </table>
       </div>
-      {% endif %}
     </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
   </body>
 </html>
