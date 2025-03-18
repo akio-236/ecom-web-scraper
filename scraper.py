@@ -2,6 +2,7 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
+from webdriver_manager.chrome import ChromeDriverManager
 import time
 
 
@@ -17,8 +18,8 @@ def scrape_product(url):
             "user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
         )
 
-        # Set up WebDriver (update the path to your chromedriver)
-        service = Service(executable_path="/path/to/chromedriver")
+        # Set up WebDriver using webdriver-manager
+        service = Service(ChromeDriverManager().install())
         driver = webdriver.Chrome(service=service, options=chrome_options)
 
         # Fetch the page
@@ -67,14 +68,15 @@ def scrape_product(url):
 
         driver.quit()  # Close the browser
 
+        # Return structured data
         return {
             "Product Name": product_name,
             "Price": price,
             "Description": description,
-            "Images": ", ".join(images),
-            "Reviews": ", ".join(reviews),
+            "Images": images,
+            "Reviews": reviews,
             "Availability": availability,
-            "Specifications": str(specifications),
+            "Specifications": specifications,
         }
 
     except Exception as e:
