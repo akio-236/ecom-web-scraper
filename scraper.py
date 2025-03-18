@@ -8,6 +8,10 @@ import time
 
 def scrape_product(url):
     try:
+        # Check if the URL is from Amazon
+        if "amazon" not in url:
+            return "Unsupported website. Please provide an Amazon URL."
+
         # Configure Selenium
         chrome_options = Options()
         chrome_options.add_argument("--headless")  # Run in background
@@ -26,93 +30,45 @@ def scrape_product(url):
         driver.get(url)
         time.sleep(5)  # Wait for the page to load
 
-        # Determine if the URL is from Amazon or Flipkart
-        if "amazon" in url:
-            # Scrape Amazon product details
-            product_name = (
-                driver.find_element(By.ID, "productTitle").text.strip()
-                if driver.find_elements(By.ID, "productTitle")
-                else "N/A"
+        # Scrape product details
+        product_name = (
+            driver.find_element(By.ID, "productTitle").text.strip()
+            if driver.find_elements(By.ID, "productTitle")
+            else "N/A"
+        )
+        price = (
+            driver.find_element(By.CLASS_NAME, "a-price-whole").text.strip()
+            if driver.find_elements(By.CLASS_NAME, "a-price-whole")
+            else "N/A"
+        )
+        description = (
+            driver.find_element(By.ID, "productDescription").text.strip()
+            if driver.find_elements(By.ID, "productDescription")
+            else "N/A"
+        )
+        images = [
+            img.get_attribute("src")
+            for img in driver.find_elements(By.CLASS_NAME, "a-dynamic-image")
+            if img.get_attribute("src")
+        ]
+        reviews = [
+            review.text.strip()
+            for review in driver.find_elements(By.CLASS_NAME, "a-size-base.review-text")
+        ]
+        availability = (
+            driver.find_element(By.ID, "availability").text.strip()
+            if driver.find_elements(By.ID, "availability")
+            else "N/A"
+        )
+        specifications = {
+            spec.text.strip(): value.text.strip()
+            for spec, value in zip(
+                driver.find_elements(
+                    By.CLASS_NAME, "a-color-secondary.a-size-base.prodDetSectionEntry"
+                ),
+                driver.find_elements(By.CLASS_NAME, "a-size-base.prodDetAttrValue"),
             )
-            price = (
-                driver.find_element(By.CLASS_NAME, "a-price-whole").text.strip()
-                if driver.find_elements(By.CLASS_NAME, "a-price-whole")
-                else "N/A"
-            )
-            description = (
-                driver.find_element(By.ID, "productDescription").text.strip()
-                if driver.find_elements(By.ID, "productDescription")
-                else "N/A"
-            )
-            images = [
-                img.get_attribute("src")
-                for img in driver.find_elements(By.CLASS_NAME, "a-dynamic-image")
-                if img.get_attribute("src")
-            ]
-            reviews = [
-                review.text.strip()
-                for review in driver.find_elements(
-                    By.CLASS_NAME, "a-size-base.review-text"
-                )
-            ]
-            availability = (
-                driver.find_element(By.ID, "availability").text.strip()
-                if driver.find_elements(By.ID, "availability")
-                else "N/A"
-            )
-            specifications = {
-                spec.text.strip(): value.text.strip()
-                for spec, value in zip(
-                    driver.find_elements(
-                        By.CLASS_NAME,
-                        "a-color-secondary.a-size-base.prodDetSectionEntry",
-                    ),
-                    driver.find_elements(By.CLASS_NAME, "a-size-base.prodDetAttrValue"),
-                )
-            }
-        elif "flipkart" in url:
-            # Scrape Flipkart product details
-            product_name = (
-                driver.find_element(By.CLASS_NAME, "B_NuCI").text.strip()
-                if driver.find_elements(By.CLASS_NAME, "B_NuCI")
-                else "N/A"
-            )
-            price = (
-                driver.find_element(By.CLASS_NAME, "_30jeq3._16Jk6d").text.strip()
-                if driver.find_elements(By.CLASS_NAME, "_30jeq3._16Jk6d")
-                else "N/A"
-            )
-            description = (
-                driver.find_element(By.CLASS_NAME, "_1mXcCf.RmoJUa").text.strip()
-                if driver.find_elements(By.CLASS_NAME, "_1mXcCf.RmoJUa")
-                else "N/A"
-            )
-            images = [
-                img.get_attribute("src")
-                for img in driver.find_elements(
-                    By.CLASS_NAME, "_396cs4._2amPTt._3qGmMb"
-                )
-                if img.get_attribute("src")
-            ]
-            reviews = [
-                review.text.strip()
-                for review in driver.find_elements(By.CLASS_NAME, "_3LWZlK._1BLPMq")
-            ]
-            availability = (
-                driver.find_element(By.CLASS_NAME, "_1dVbu9").text.strip()
-                if driver.find_elements(By.CLASS_NAME, "_1dVbu9")
-                else "N/A"
-            )
-            specifications = {
-                spec.text.strip(): value.text.strip()
-                for spec, value in zip(
-                    driver.find_elements(By.CLASS_NAME, "_3k-BhJ"),
-                    driver.find_elements(By.CLASS_NAME, "_21lJbe"),
-                )
-            }
-        else:
-            driver.quit()
-            return "Unsupported website. Please provide an Amazon or Flipkart URL."
+        }
 
         driver.quit()  # Close the browser
 
