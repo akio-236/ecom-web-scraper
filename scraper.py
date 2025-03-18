@@ -1,56 +1,71 @@
-import requests
-from bs4 import BeautifulSoup
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.chrome.options import Options
+import time
 
 
 def scrape_product(url):
     try:
-        # Simulate a real browser request
-        headers = {
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
-        }
-        response = requests.get(url, headers=headers)
-        response.raise_for_status()  # Check for HTTP errors
-        soup = BeautifulSoup(response.text, "lxml")
+        # Configure Selenium
+        chrome_options = Options()
+        chrome_options.add_argument("--headless")  # Run in background
+        chrome_options.add_argument("--disable-gpu")
+        chrome_options.add_argument("--no-sandbox")
+        chrome_options.add_argument("--disable-dev-shm-usage")
+        chrome_options.add_argument(
+            "user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
+        )
 
-        # Extract product details (customize for Amazon's structure)
+        # Set up WebDriver (update the path to your chromedriver)
+        service = Service(executable_path="/path/to/chromedriver")
+        driver = webdriver.Chrome(service=service, options=chrome_options)
+
+        # Fetch the page
+        driver.get(url)
+        time.sleep(5)  # Wait for the page to load
+
+        # Extract product details
         product_name = (
-            soup.find("span", id="productTitle").get_text(strip=True)
-            if soup.find("span", id="productTitle")
+            driver.find_element(By.ID, "productTitle").text.strip()
+            if driver.find_elements(By.ID, "productTitle")
             else "N/A"
         )
         price = (
-            soup.find("span", class_="a-price-whole").get_text(strip=True)
-            if soup.find("span", class_="a-price-whole")
+            driver.find_element(By.CLASS_NAME, "a-price-whole").text.strip()
+            if driver.find_elements(By.CLASS_NAME, "a-price-whole")
             else "N/A"
         )
         description = (
-            soup.find("div", id="productDescription").get_text(strip=True)
-            if soup.find("div", id="productDescription")
+            driver.find_element(By.ID, "productDescription").text.strip()
+            if driver.find_elements(By.ID, "productDescription")
             else "N/A"
         )
         images = [
-            img["src"]
-            for img in soup.find_all("img", class_="a-dynamic-image")
-            if img.get("src")
+            img.get_attribute("src")
+            for img in driver.find_elements(By.CLASS_NAME, "a-dynamic-image")
+            if img.get_attribute("src")
         ]
         reviews = [
-            review.get_text(strip=True)
-            for review in soup.find_all("span", class_="a-size-base review-text")
+            review.text.strip()
+            for review in driver.find_elements(By.CLASS_NAME, "a-size-base.review-text")
         ]
         availability = (
-            soup.find("div", id="availability").get_text(strip=True)
-            if soup.find("div", id="availability")
+            driver.find_element(By.ID, "availability").text.strip()
+            if driver.find_elements(By.ID, "availability")
             else "N/A"
         )
         specifications = {
-            spec.get_text(strip=True): value.get_text(strip=True)
+            spec.text.strip(): value.text.strip()
             for spec, value in zip(
-                soup.find_all(
-                    "th", class_="a-color-secondary a-size-base prodDetSectionEntry"
+                driver.find_elements(
+                    By.CLASS_NAME, "a-color-secondary.a-size-base.prodDetSectionEntry"
                 ),
-                soup.find_all("td", class_="a-size-base prodDetAttrValue"),
+                driver.find_elements(By.CLASS_NAME, "a-size-base.prodDetAttrValue"),
             )
         }
+
+        driver.quit()  # Close the browser
 
         return {
             "Product Name": product_name,
@@ -62,5 +77,5 @@ def scrape_product(url):
             "Specifications": str(specifications),
         }
 
-    except requests.exceptions.RequestException as e:
+    except Exception as e:
         return f"Error fetching the URL: {e}"
