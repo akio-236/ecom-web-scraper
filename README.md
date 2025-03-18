@@ -103,4 +103,7 @@ A web application built with **Python (Flask)** and **Selenium** that allows use
    3. Commit your changes.
    4. Push your branch to your forked repository.
    5. Submit a pull request.
-      
+## Contact
+**For questions or feedback, feel free to reach out:**
+   - Akshay S: akshays23623@gmail.com
+   - Github: github.com/akio-236
