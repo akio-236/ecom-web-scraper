@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>E-commerce Scraper</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/styles.css') }}"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <h1>E-commerce Product Scraper</h1>
+      <form method="POST">
+        <input type="url" name="url" placeholder="Enter product URL" required />
+        <button type="submit">Scrape</button>
+      </form>
+
+      {% if error %}
+      <p class="error">{{ error }}</p>
+      {% endif %} {% if table %}
+      <div class="table-container">{{ table | safe }}</div>
+      <a href="/download?data={{ data }}" class="download-btn"
+        >Download as CSV</a
+      >
+      {% endif %}
+    </div>
+  </body>
+</html>
