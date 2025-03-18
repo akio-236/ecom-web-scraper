@@ -1,4 +1,3 @@
-//Custom JavaScript// 
 document.getElementById('scraper-form').addEventListener('submit', async function (e) {
     e.preventDefault(); // Prevent form submission
 
@@ -42,12 +41,12 @@ document.getElementById('scraper-form').addEventListener('submit', async functio
             });
 
             // Update reviews
-            const reviewsList = document.getElementById('reviews');
-            reviewsList.innerHTML = '';
+            const reviewsTable = document.getElementById('reviews').getElementsByTagName('tbody')[0];
+            reviewsTable.innerHTML = '';
             data['Reviews'].forEach(review => {
-                const li = document.createElement('li');
-                li.innerText = review;
-                reviewsList.appendChild(li);
+                const row = reviewsTable.insertRow();
+                const cell = row.insertCell(0);
+                cell.innerText = review;
             });
 
             // Update specifications
