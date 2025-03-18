@@ -1,87 +1,61 @@
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    margin: 0;
-    padding: 0;
+/* Loading Spinner */
+.spinner {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
 }
 
-.container {
-    width: 80%;
-    margin: 50px auto;
-    text-align: center;
+.loader {
+    border: 8px solid #f3f3f3;
+    border-top: 8px solid #3498db;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
 }
 
-h1 {
-    color: #333;
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }
 
-form {
-    margin-bottom: 20px;
-}
-
-input[type="url"] {
-    padding: 10px;
-    width: 300px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
-button {
-    padding: 10px 20px;
-    background-color: #28a745;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-button:hover {
-    background-color: #218838;
-}
-
+/* Error Message */
 .error {
     color: red;
+    margin: 20px 0;
 }
 
-.product-details {
-    text-align: left;
-    background: white;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+/* Image Carousel */
+.carousel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 20px 0;
 }
 
-.images img {
+.carousel-images {
+    display: flex;
+    overflow: hidden;
+    width: 80%;
+}
+
+.carousel-images img {
     max-width: 100%;
     height: auto;
-    margin: 10px 0;
+    border-radius: 5px;
+    margin: 0 10px;
+    transition: transform 0.5s ease;
+}
+
+.carousel-button {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
     border-radius: 5px;
 }
 
-.reviews {
-    list-style-type: none;
-    padding: 0;
-}
-
-.reviews li {
-    background: #f9f9f9;
-    margin: 5px 0;
-    padding: 10px;
-    border-radius: 5px;
-}
-
-.specifications {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-}
-
-.specifications th, .specifications td {
-    border: 1px solid #ddd;
-    padding: 10px;
-    text-align: left;
-}
-
-.specifications th {
-    background-color: #f8f9fa;
+.carousel-button:hover {
+    background-color: #2980b9;
 }
