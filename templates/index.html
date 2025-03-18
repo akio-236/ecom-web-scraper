@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>E-commerce Scraper</title>
+    <title>Amazon Product Scraper</title>
     <link
       rel="stylesheet"
       href="{{ url_for('static', filename='css/styles.css') }}"
@@ -34,15 +34,22 @@
       <!-- Results Section -->
       <div id="results" style="display: none">
         <h2 id="product-name"></h2>
-        <p><strong>Price:</strong> <span id="product-price"></span></p>
-        <p>
-          <strong>Description:</strong> <span id="product-description"></span>
-        </p>
-        <p>
-          <strong>Availability:</strong> <span id="product-availability"></span>
-        </p>
+        <table class="product-details">
+          <tr>
+            <th>Price</th>
+            <td id="product-price"></td>
+          </tr>
+          <tr>
+            <th>Description</th>
+            <td id="product-description"></td>
+          </tr>
+          <tr>
+            <th>Availability</th>
+            <td id="product-availability"></td>
+          </tr>
+        </table>
 
-        <!-- Image Carousel -->
+        <!-- Images -->
         <h3>Images</h3>
         <div id="image-carousel" class="carousel">
           <button id="prev-button" class="carousel-button">&#10094;</button>
@@ -52,11 +59,18 @@
 
         <!-- Reviews -->
         <h3>Reviews</h3>
-        <ul id="reviews"></ul>
+        <table id="reviews" class="reviews-table">
+          <thead>
+            <tr>
+              <th>Review</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
 
         <!-- Specifications -->
         <h3>Specifications</h3>
-        <table id="specifications">
+        <table id="specifications" class="specifications-table">
           <thead>
             <tr>
               <th>Attribute</th>
