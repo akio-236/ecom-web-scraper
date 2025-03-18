@@ -1,3 +1,4 @@
+/* General Styles */
 body {
     font-family: Arial, sans-serif;
     background-color: #f4f4f4;
@@ -7,14 +8,15 @@ body {
 
 .container {
     width: 80%;
-    margin: 50px auto;
-    text-align: center;
+    margin: 50px auto; /* Center the container */
+    text-align: center; /* Center text inside the container */
 }
 
 h1 {
     color: #333;
 }
 
+/* Form Styles */
 form {
     margin-bottom: 20px;
 }
@@ -39,22 +41,24 @@ button:hover {
     background-color: #218838;
 }
 
+/* Error Message Styles */
 .error {
     color: red;
     margin: 20px 0;
 }
 
-/* Loading Spinner */
+/* Loading Spinner Styles */
 .spinner {
     display: flex;
     justify-content: center; /* Center horizontally */
     align-items: center; /* Center vertically */
-    margin: 20px 0;
+    margin: 20px 0; /* Add some space above and below */
+    width: 100%; /* Ensure it takes full width */
 }
 
 .loader {
-    border: 8px solid #f3f3f3;
-    border-top: 8px solid #3498db;
+    border: 8px solid #f3f3f3; /* Light grey */
+    border-top: 8px solid #3498db; /* Blue */
     border-radius: 50%;
     width: 50px;
     height: 50px;
@@ -66,26 +70,33 @@ button:hover {
     100% { transform: rotate(360deg); }
 }
 
-/* Tables */
-.product-details, .reviews-table, .specifications-table {
+/* Results Section Styles */
+#results {
+    text-align: left;
+    background: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Product Details Table */
+.product-details {
     width: 100%;
     border-collapse: collapse;
     margin: 20px 0;
 }
 
-.product-details th, .product-details td,
-.reviews-table th, .reviews-table td,
-.specifications-table th, .specifications-table td {
+.product-details th, .product-details td {
     border: 1px solid #ddd;
     padding: 10px;
     text-align: left;
 }
 
-.product-details th, .reviews-table th, .specifications-table th {
+.product-details th {
     background-color: #f8f9fa;
 }
 
-/* Image Carousel */
+/* Image Carousel Styles */
 .carousel {
     display: flex;
     align-items: center;
@@ -118,4 +129,38 @@ button:hover {
 
 .carousel-button:hover {
     background-color: #2980b9;
+}
+
+/* Reviews Table Styles */
+.reviews-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+.reviews-table th, .reviews-table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+}
+
+.reviews-table th {
+    background-color: #f8f9fa;
+}
+
+/* Specifications Table Styles */
+.specifications-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+.specifications-table th, .specifications-table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+}
+
+.specifications-table th {
+    background-color: #f8f9fa;
 }
