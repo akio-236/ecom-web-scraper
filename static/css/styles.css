@@ -1,5 +1,3 @@
-/*Custom Css*/
-
 body {
     font-family: Arial, sans-serif;
     background-color: #f4f4f4;
@@ -45,40 +43,45 @@ button:hover {
     color: red;
 }
 
-.table-container {
-    margin-top: 20px;
-    overflow-x: auto;
+.product-details {
+    text-align: left;
+    background: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-table {
+.images img {
+    max-width: 100%;
+    height: auto;
+    margin: 10px 0;
+    border-radius: 5px;
+}
+
+.reviews {
+    list-style-type: none;
+    padding: 0;
+}
+
+.reviews li {
+    background: #f9f9f9;
+    margin: 5px 0;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.specifications {
     width: 100%;
     border-collapse: collapse;
-    margin: 20px 0;
+    margin-top: 20px;
 }
 
-table, th, td {
+.specifications th, .specifications td {
     border: 1px solid #ddd;
-}
-
-th, td {
     padding: 10px;
     text-align: left;
 }
 
-th {
+.specifications th {
     background-color: #f8f9fa;
-}
-
-.download-btn {
-    display: inline-block;
-    margin-top: 20px;
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: white;
-    text-decoration: none;
-    border-radius: 5px;
-}
-
-.download-btn:hover {
-    background-color: #0056b3;
 }
