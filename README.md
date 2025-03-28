@@ -62,17 +62,17 @@ A web application built with **Python (Flask)** and **Selenium** that allows use
 ## Project Structure
   ```bash
  amazon-product-scraper/
-├── app.py                      # Flask backend (main application)
-├── scraper.py                  # Web scraping logic
-├── requirements.txt            # Python dependencies
-├── README.md                   # Project documentation
+├── app.py                     
+├── scraper.py                 
+├── requirements.txt           
+├── README.md                   
 ├── templates/
-│   └── index.html              # Frontend UI
+│   └── index.html              
 └── static/
     ├── css/
-    │   └── styles.css          # Custom CSS
+    │   └── styles.css         
     └── js/
-        └── script.js           # Custom JavaScript
+        └── script.js           
 ```
 ## Usage
 
